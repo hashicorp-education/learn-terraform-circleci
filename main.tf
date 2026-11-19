@@ -62,6 +62,12 @@ resource "aws_s3_bucket_website_configuration" "app" {
 }
 
 resource "aws_s3_object" "app" {
+  depends_on = [
+    aws_s3_bucket_ownership_controls.app,
+    aws_s3_bucket_public_access_block.app,
+    aws_s3_bucket_acl.app
+  ]
+  
   acl          = "public-read"
   key          = "index.html"
   bucket       = aws_s3_bucket.app.id
